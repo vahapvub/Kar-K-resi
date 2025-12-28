@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seni Çok Seviyorum Birtanem</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(to bottom, #0a1128 0%, #1c2541 50%, #2d4263 100%);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Sayfa kar yağışı */
+        .page-snow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .page-snowflake {
+            position: absolute;
+            color: white;
+            font-size: 24px;
+            opacity: 0.9;
+            animation: pageFall linear infinite;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes pageFall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Ana container */
+        .scene-container {
+            position: relative;
+            width: 90%;
+            max-width: 1400px;
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+        }
+
+        /* Başlık */
+        .main-title {
+            font-family: 'Brush Script MT', 'Segoe Script', cursive;
+            font-size: 52px;
+            color: #ff1744;
+            text-shadow: 
+                3px 3px 0 #fff,
+                6px 6px 15px rgba(255, 23, 68, 0.6),
+                0 0 30px rgba(255, 255, 255, 1),
+                0 0 50px rgba(255, 23, 68, 0.8);
+            margin-bottom: 50px;
+            text-align: center;
+            animation: titleGlow 2s ease-in-out infinite;
+            z-index: 100;
+            line-height: 1.4;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { 
+                text-shadow: 3px 3px 0 #fff, 6px 6px 15px rgba(255, 23, 68, 0.6), 0 0 30px rgba(255, 255, 255, 1), 0 0 50px rgba(255, 23, 68, 0.8);
+            }
+            50% { 
+                text-shadow: 3px 3px 0 #fff, 6px 6px 20px rgba(255, 23, 68, 0.9), 0 0 40px rgba(255, 255, 255, 1), 0 0 60px rgba(255, 23, 68, 1);
+            }
+        }
+
+        /* Sahne */
+        .globe-scene {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            height: 650px;
+        }
+
+        /* Arka plan köy - zemin seviyesinde */
+        .background-village {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 450px;
+            z-index: 1;
+        }
+
+        /* Arka plan ağaçlar */
+        .bg-trees {
+            position: absolute;
+            bottom: 150px;
+            left: 0;
+            right: 0;
+            height: 250px;
+        }
+
+        .bg-tree {
+            position: absolute;
+            opacity: 0.5;
+            filter: blur(1px);
+        }
+
+        .bg-tree-trunk {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 18px;
+            height: 50px;
+            background: linear-gradient(90deg, #3a2515, #2a1808);
+            border: 1px solid #1a0a05;
+        }
+
+        .bg-tree-foliage {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .bg-foliage-1 {
+            bottom: 40px;
+            width: 0;
+            height: 0;
+            border-left: 55px solid transparent;
+            border-right: 55px solid transparent;
+            border-bottom: 70px solid #1a3d2e;
+        }
+
+        .bg-foliage-2 {
+            bottom: 80px;
+            width: 0;
+            height: 0;
+            border-left: 45px solid transparent;
+            border-right: 45px solid transparent;
+            border-bottom: 60px solid #1e4532;
+        }
+
+        .bg-foliage-3 {
+            bottom: 115px;
+            width: 0;
+            height: 0;
+            border-left: 35px solid transparent;
+            border-right: 35px solid transparent;
+            border-bottom: 50px solid #224d36;
+        }
+
+        /* Köy evleri - arka planda */
+        .village-houses {
+            position: absolute;
+            bottom: 150px;
+            left: 0;
+            right: 0;
+            height: 200px;
+        }
+
+        .bg-house {
+            position: absolute;
+            bottom: 0;
+        }
+
+        .bg-house-body {
+            position: relative;
+            width: 120px;
+            height: 90px;
+            background: linear-gradient(135deg, #8b4513 0%, #654321 50%, #4a2a1a 100%);
+            border: 3px solid #3a1a0a;
+            box-shadow: 
+                3px 3px 12px rgba(0, 0, 0, 0.5),
+                inset -3px -3px 6px rgba(0, 0, 0, 0.3),
+                inset 3px 3px 6px rgba(139, 69, 19, 0.3);
+        }
+
+        .bg-house-roof {
+            position: absolute;
+            top: -55px;
+            left: -18px;
+            width: 0;
+            height: 0;
+            border-left: 78px solid transparent;
+            border-right: 78px solid transparent;
+            border-bottom: 65px solid #8b0000;
+            filter: drop-shadow(0 -3px 6px rgba(0, 0, 0, 0.5));
+        }
+
+        .bg-roof-snow {
+            position: absolute;
+            top: 8px;
+            left: -78px;
+            width: 156px;
+            height: 18px;
+            background: linear-gradient(to bottom, white, rgba(255, 255, 255, 0.9));
+            border-radius: 3px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .bg-window {
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            background: radial-gradient(circle, #ffed4e, #ffd700);
+            border: 3px solid #5a3a1a;
+            box-shadow: 
+                0 0 20px rgba(255, 215, 0, 0.9),
+                inset 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .bg-door {
+            position: absolute;
+            width: 32px;
+            height: 48px;
+            background: linear-gradient(180deg, #3a2010 0%, #2a1008 100%);
+            bottom: 0;
+            border: 3px solid #1a0a05;
+            border-radius: 4px 4px 0 0;
+        }
+
+        .bg-chimney {
+            position: absolute;
+            top: -75px;
+            right: 20px;
+            width: 22px;
+            height: 40px;
+            background: linear-gradient(135deg, #6a3a1a, #4a2010);
+            border: 3px solid #3a1a0a;
+        }
+
+        .bg-chimney::after {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: -4px;
+            width: 30px;
+            height: 8px;
+            background: #6a3a1a;
+            border: 3px solid #3a1a0a;
+        }
+
+        .bg-smoke {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 16px;
+            background: rgba(200, 200, 200, 0.8);
+            border-radius: 50%;
+            animation: smokeRise 3s infinite;
+        }
+
+        @keyframes smokeRise {
+            0% { transform: translateX(-50%) translateY(0) scale(0.5); opacity: 0.9; }
+            100% { transform: translateX(-50%) translateY(-60px) scale(1.5); opacity: 0; }
+        }
+
+        /* Yılbaşı ışıkları */
+        .bg-xmas-lights {
+            position: absolute;
+            top: -58px;
+            left: -18px;
+            width: 156px;
+            height: 10px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .bg-xmas-light {
+            width: 8px;
+            height: 14px;
+            border-radius: 0 0 50% 50%;
+            animation: lightBlink 1.5s infinite;
+        }
+
+        .light-red { background: #ff0000; animation-delay: 0s; box-shadow: 0 0 10px #ff0000; }
+        .light-green { background: #00ff00; animation-delay: 0.3s; box-shadow: 0 0 10px #00ff00; }
+        .light-blue { background: #0088ff; animation-delay: 0.6s; box-shadow: 0 0 10px #0088ff; }
+        .light-yellow { background: #ffff00; animation-delay: 0.9s; box-shadow: 0 0 10px #ffff00; }
+
+        @keyframes lightBlink {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(0.9); }
+        }
+
+        /* Kar zemini */
+        .snow-ground {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 150px;
+            background: linear-gradient(to bottom, 
+                rgba(255, 255, 255, 0.95) 0%,
+                rgba(240, 248, 255, 1) 50%,
+                rgba(230, 240, 250, 1) 100%);
+            border-radius: 50% 50% 0 0 / 20% 20% 0 0;
+            box-shadow: 
+                inset 0 10px 30px rgba(200, 220, 255, 0.3),
+                0 -5px 20px rgba(255, 255, 255, 0.5);
+            z-index: 5;
+        }
+
+        /* Kar küresi - ön planda, ortada */
+        .snow-globe {
+            position: absolute;
+            bottom: 150px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle at 35% 35%, 
+                rgba(255, 255, 255, 0.25) 0%,
+                rgba(255, 255, 255, 0.12) 40%,
+                rgba(255, 255, 255, 0.05) 70%,
+                rgba(200, 220, 255, 0.08) 100%);
+            border-radius: 50%;
+            border: 10px solid transparent;
+            background-clip: padding-box;
+            box-shadow: 
+                0 0 0 3px rgba(255, 255, 255, 0.2),
+                inset 25px 25px 50px rgba(255, 255, 255, 0.15),
+                inset -15px -15px 30px rgba(0, 0, 0, 0.08),
+                0 25px 70px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        .snow-globe::before {
+            content: '';
+            position: absolute;
+            top: 8%;
+            left: 12%;
+            width: 35%;
+            height: 35%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent);
+            border-radius: 50%;
+            filter: blur(15px);
+        }
+
+        /* Kar küresi içi kar */
+        .globe-snow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .globe-snowflake {
+            position: absolute;
+            color: white;
+            font-size: 14px;
+            opacity: 0.95;
+            animation: globeFall linear infinite;
+        }
+
+        @keyframes globeFall {
+            to {
+                transform: translateY(450px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Fotoğraf çerçevesi - kar küresinin içinde */
+        .photo-frame {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            box-shadow: 
+                0 0 35px rgba(255, 215, 0, 0.3),
+                0 15px 40px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+            background: white;
+            z-index: 15;
+        }
+
+        #uploadedPhoto {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Kaide */
+        .globe-base {
+            position: absolute;
+            bottom: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 420px;
+            height: 70px;
+            background: linear-gradient(180deg, #a0826d 0%, #8b6f47 50%, #6d5638 100%);
+            border-radius: 12px;
+            box-shadow: 
+                0 12px 35px rgba(0, 0, 0, 0.6),
+                inset 0 -8px 15px rgba(0, 0, 0, 0.3),
+                inset 0 4px 8px rgba(255, 255, 255, 0.2);
+            z-index: 9;
+        }
+
+        .base-ring {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 480px;
+            height: 25px;
+            background: linear-gradient(180deg, #ffd700 0%, #daa520 50%, #b8860b 100%);
+            border-radius: 50%;
+            box-shadow: 
+                0 6px 18px rgba(0, 0, 0, 0.4),
+                inset 0 2px 4px rgba(255, 255, 255, 0.4),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .base-pattern {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 13px;
+            color: rgba(139, 111, 71, 0.6);
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sayfa kar yağışı -->
+    <div class="page-snow" id="pageSnow"></div>
+
+    <div class="scene-container">
+        <!-- Başlık -->
+        <h1 class="main-title">Seni Çok Seviyorum Birtanem<br>Nice Mutlu Birlikte Senelere</h1>
+
+        <!-- Sahne -->
+        <div class="globe-scene">
+            <!-- Arka plan köy -->
+            <div class="background-village">
+                <!-- Arka plan ağaçlar -->
+                <div class="bg-trees">
+                    <div class="bg-tree" style="left: 3%; bottom: 0;">
+                        <div class="bg-tree-trunk"></div>
+                        <div class="bg-tree-foliage bg-foliage-1"></div>
+                        <div class="bg-tree-foliage bg-foliage-2"></div>
+                        <div class="bg-tree-foliage bg-foliage-3"></div>
+                    </div>
+                    <div class="bg-tree" style="left: 15%; bottom: 10px;">
+                        <div class="bg-tree-trunk"></div>
+                        <div class="bg-tree-foliage bg-foliage-1"></div>
+                        <div class="bg-tree-foliage bg-foliage-2"></div>
+                        <div class="bg-tree-foliage bg-foliage-3"></div>
+                    </div>
+                    <div class="bg-tree" style="right: 15%; bottom: 5px;">
+                        <div class="bg-tree-trunk"></div>
+                        <div class="bg-tree-foliage bg-foliage-1"></div>
+                        <div class="bg-tree-foliage bg-foliage-2"></div>
+                        <div class="bg-tree-foliage bg-foliage-3"></div>
+                    </div>
+                    <div class="bg-tree" style="right: 3%; bottom: 0;">
+                        <div class="bg-tree-trunk"></div>
+                        <div class="bg-tree-foliage bg-foliage-1"></div>
+                        <div class="bg-tree-foliage bg-foliage-2"></div>
+                        <div class="bg-tree-foliage bg-foliage-3"></div>
+                    </div>
+                </div>
+
+                <!-- Köy evleri -->
+                <div class="village-houses">
+                    <!-- Sol ev -->
+                    <div class="bg-house" style="left: 8%;">
+                        <div class="bg-house-body">
+                            <div class="bg-house-roof">
+                                <div class="bg-roof-snow"></div>
+                                <div class="bg-xmas-lights">
+                                    <div class="bg-xmas-light light-red"></div>
+                                    <div class="bg-xmas-light light-green"></div>
+                                    <div class="bg-xmas-light light-blue"></div>
+                                    <div class="bg-xmas-light light-yellow"></div>
+                                    <div class="bg-xmas-light light-red"></div>
+                                    <div class="bg-xmas-light light-green"></div>
+                                </div>
+                            </div>
+                            <div class="bg-chimney">
+                                <div class="bg-smoke"></div>
+                            </div>
+                            <div class="bg-window" style="top: 20px; left: 18px;"></div>
+                            <div class="bg-window" style="top: 20px; right: 18px;"></div>
+                            <div class="bg-door" style="left: 44px;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Orta sol ev -->
+                    <div class="bg-house" style="left: 28%;">
+                        <div class="bg-house-body">
+                            <div class="bg-house-roof">
+                                <div class="bg-roof-snow"></div>
+                                <div class="bg-xmas-lights">
+                                    <div class="bg-xmas-light light-blue"></div>
+                                    <div class="bg-xmas-light light-yellow"></div>
+                                    <div class="bg-xmas-light light-red"></div>
+                                    <div class="bg-xmas-light light-green"></div>
+                                    <div class="bg-xmas-light light-blue"></div>
+                                    <div class="bg-xmas-light light-yellow"></div>
+                                </div>
+                            </div>
+                            <div class="bg-chimney">
+                                <div class="bg-smoke" style="animation-delay: 0.8s;"></div>
+                            </div>
+                            <div class="bg-window" style="top: 20px; left: 18px;"></div>
+                            <div class="bg-window" style="top: 20px; right: 18px;"></div>
+                            <div class="bg-door" style="right: 44px;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Orta sağ ev -->
+                    <div class="bg-house" style="right: 28%;">
+                        <div class="bg-house-body">
+                            <div class="bg-house-roof">
+                                <div class="bg-roof-snow"></div>
+                                <div class="bg-xmas-lights">
+                                    <div class="bg-xmas-light light-yellow"></div>
+                                    <div class="bg-xmas-light light-red"></div>
+                                    <div class="bg-xmas-light light-green"></div>
+                                    <div class="bg-xmas-light light-blue"></div>
+                                    <div class="bg-xmas-light light-yellow"></div>
+                                    <div class="bg-xmas-light light-red"></div>
+                                </div>
+                            </div>
+                            <div class="bg-chimney">
+                                <div class="bg-smoke" style="animation-delay: 1.5s;"></div>
+                            </div>
+                            <div class="bg-window" style="top: 20px; left: 18px;"></div>
+                            <div class="bg-window" style="top: 20px; right: 18px;"></div>
+                            <div class="bg-door" style="left: 44px;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Sağ ev -->
+                    <div class="bg-house" style="right: 8%;">
+                        <div class="bg-house-body">
+                            <div class="bg-house-roof">
+                                <div class="bg-roof-snow"></div>
+                                <div class="bg-xmas-lights">
+                                    <div class="bg-xmas-light light-green"></div>
+                                    <div class="bg-xmas-light light-blue"></div>
+                                    <div class="bg-xmas-light light-yellow"></div>
+                                    <div class="bg-xmas-light light-red"></div>
+                                    <div class="bg-xmas-light light-green"></div>
+                                    <div class="bg-xmas-light light-blue"></div>
+                                </div>
+                            </div>
+                            <div class="bg-chimney">
+                                <div class="bg-smoke" style="animation-delay: 2s;"></div>
+                            </div>
+                            <div class="bg-window" style="top: 20px; left: 18px;"></div>
+                            <div class="bg-window" style="top: 20px; right: 18px;"></div>
+                            <div class="bg-door" style="right: 44px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kar küresi -->
+            <div class="snow-globe">
+                <!-- Kar küresi içi kar -->
+                <div class="globe-snow" id="globeSnow"></div>
+
+                <!-- Fotoğraf -->
+                <div class="photo-frame">
+                    <img id="uploadedPhoto" src="https://i.ibb.co/1tcSM3Kk/1000012474.jpg" alt="">
+                </div>
+            </div>
+
+            <!-- Kaide -->
+            <div class="globe-base">
+                <div class="base-ring"></div>
+                <div class="base-pattern">❄ 2025 ❄</div>
+            </div>
+
+            <!-- Kar zemini -->
+            <div class="snow-ground"></div>
+        </div>
+    </div>
+
+    <script>
+        // Sayfa kar yağışı
+        const pageSnow = document.getElementById('pageSnow');
+        for (let i = 0; i < 80; i++) {
+            const snowflake = document.createElement('div');
+            snowflake.className = 'page-snowflake';
+            snowflake.innerHTML = '❄';
+            snowflake.style.left = Math.random() * 100 + '%';
+            snowflake.style.animationDuration = (Math.random() * 4 + 3) + 's';
+            snowflake.style.animationDelay = Math.random() * 8 + 's';
+            snowflake.style.fontSize = (Math.random() * 15 + 15) + 'px';
+            pageSnow.appendChild(snowflake);
+        }
+
+        // Kar küresi içi kar
+        const globeSnow = document.getElementById('globeSnow');
+        for (let i = 0; i < 50; i++) {
+            const snowflake = document.createElement('div');
+            snowflake.className = 'globe-snowflake';
+            snowflake.innerHTML = '❄';
+            snowflake.style.left = Math.random() * 100 + '%';
+            snowflake.style.top = -Math.random() * 50 + 'px';
+            snowflake.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            snowflake.style.animationDelay = Math.random() * 5 + 's';
+            snowflake.style.fontSize = (Math.random() * 6 + 10) + 'px';
+            globeSnow.appendChild(snowflake);
+        }
+    </script>
+</body>
+</html>
